@@ -441,7 +441,7 @@ public final class SmoothHardwareProfiler {
      */
     public static void optimizeMinecraftOptions(Context ctx, File gameDir, SmoothMode mode) {
         if (gameDir == null) return;
-        FileUtils.ensureDirectory(gameDir);
+        try { FileUtils.ensureDirectory(gameDir); } catch (IOException ignored) { gameDir.mkdirs(); }
         File optionsFile = new File(gameDir, "options.txt");
 
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
@@ -536,7 +536,7 @@ public final class SmoothHardwareProfiler {
     public static void writeOptimizedSodiumConfigs(File gameDir, SmoothMode mode) {
         if (gameDir == null) return;
         File configDir = new File(gameDir, "config");
-        FileUtils.ensureDirectory(configDir);
+        try { FileUtils.ensureDirectory(configDir); } catch (IOException ignored) { configDir.mkdirs(); }
 
         File mixinProps = new File(configDir, "sodium-mixins.properties");
         String mixinContent = "mixin.features.buffer_builder.intrinsics=false\n"
