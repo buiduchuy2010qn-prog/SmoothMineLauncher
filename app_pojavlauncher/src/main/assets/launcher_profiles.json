@@ -1,9 +1,10 @@
 {
   "profiles": {
-    "(Default)": {
-      "name": "(Default)",
-      "lastVersionId": "1.7.10"
+    "00000000-0000-0000-0000-000000000001": {
+      "name": "SmoothMine (Mặc định)",
+      "lastVersionId": "latest-release",
+      "pojavRendererName": "opengles_mobileglues"
     }
   },
-  "selectedProfile": "(Default)"
+  "selectedProfile": "00000000-0000-0000-0000-000000000001"
 }

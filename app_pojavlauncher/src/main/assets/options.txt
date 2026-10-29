@@ -94,3 +94,11 @@ soundCategory_hostile:1.0
 soundCategory_neutral:1.0
 soundCategory_player:1.0
 soundCategory_ambient:1.0
+
+simulationDistance:6
+graphicsMode:0
+cloudRenderMode:"off"
+entityShadows:false
+entityDistanceScaling:0.75
+biomeBlendRadius:1
+prioritizeChunkUpdates:0

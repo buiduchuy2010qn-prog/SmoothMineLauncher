@@ -1,34 +1,28 @@
-name: Android CI
+name: SmoothMine Android Build
 
 on:
-  pull_request:
-    branches-ignore:
-      - 'l10n_v3_openjdk' 
-    types: [ opened, reopened ]
   push:
-    branches-ignore:
-      - 'l10n_v3_openjdk'
+    branches:
+      - '*'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-22.04
-    env:
-      GPLAY_KEYSTORE_PASSWORD: ${{ secrets.GPLAY_KEYSTORE_PASSWORD }}
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
     steps:
-      - name: Checkout
+      - name: Checkout SmoothMine Source
         uses: actions/checkout@v4
         with:
           submodules: "recursive"
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Get JRE 8
+      - name: Try Download JRE 8 Artifact
+        continue-on-error: true
         uses: dawidd6/action-download-artifact@v9
         with:
           workflow: build.yml
@@ -38,74 +32,55 @@ jobs:
           branch: buildjre8
           name: jre8-pojav
 
-      # - name: Get JRE17
-      #   uses: dawidd6/action-download-artifact@v9
-      #   with:
-      #     workflow: build.yml
-      #     path: app_pojavlauncher/src/main/assets/components/jre-new
-      #     workflow_conclusion: completed
-      #     repo: AngelAuraMC/angelauramc-openjdk-build
-      #     branch: buildjre17-21
-      #     name: jre17-pojav
-      #
-      # - name: Get JRE21
-      #   uses: dawidd6/action-download-artifact@v9
-      #   with:
-      #     workflow: build.yml
-      #     path: app_pojavlauncher/src/main/assets/components/jre-21
-      #     workflow_conclusion: completed
-      #     repo: AngelAuraMC/angelauramc-openjdk-build
-      #     branch: buildjre17-21
-      #     name: jre21-pojav
-      #
-      # - name: Get JRE25
-      #   uses: dawidd6/action-download-artifact@v9
-      #   with:
-      #     workflow: build.yml
-      #     path: app_pojavlauncher/src/main/assets/components/jre-25
-      #     workflow_conclusion: completed
-      #     repo: FCL-Team/Android-OpenJDK-Build
-      #     branch: Build_JRE_25
-      #     name: jre25-multiarch
+      - name: Ensure Bundled JRE 8 (Public Release Fallback)
+        run: |
+          JRE_DIR="app_pojavlauncher/src/main/assets/components/jre"
+          mkdir -p "$JRE_DIR"
+          if [ ! -f "$JRE_DIR/version" ] || [ ! -f "$JRE_DIR/bin-arm64.tar.xz" ]; then
+            echo "Packaging JRE 8 from public OpenJDK release..."
+            mkdir -p /tmp/empty_universal
+            tar -cJf "$JRE_DIR/universal.tar.xz" -C /tmp/empty_universal .
+            BASE_URL="https://github.com/AngelAuraMC/angelauramc-openjdk-build/releases/download/download_jre8"
+            curl -fSL "$BASE_URL/jre8-android-arm64.tar.xz" -o "$JRE_DIR/bin-arm64.tar.xz"
+            curl -fSL "$BASE_URL/jre8-android-arm.tar.xz" -o "$JRE_DIR/bin-arm.tar.xz"
+            curl -fSL "$BASE_URL/jre8-android-x86.tar.xz" -o "$JRE_DIR/bin-x86.tar.xz"
+            curl -fSL "$BASE_URL/jre8-android-x86_64.tar.xz" -o "$JRE_DIR/bin-x86_64.tar.xz"
+            echo "smoothmine-jre8-2026" > "$JRE_DIR/version"
+          fi
+          ls -lh "$JRE_DIR"
 
       - uses: gradle/actions/setup-gradle@v4
         with:
           validate-wrappers: false
           gradle-version: "9.6.1"
 
-      - name: Run scripts
+      - name: Prepare Language List & Output Dir
         run: |
+          sed -i 's/\r$//' ./scripts/languagelist_updater.sh
+          chmod +x ./scripts/languagelist_updater.sh
           ./scripts/languagelist_updater.sh
-          mkdir out
+          mkdir -p out
 
-      - name: Build Release .apk
+      - name: Build Signed SmoothMine Release APK
         run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleRelease
-          mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk out/app-release.apk
+          gradle :app_pojavlauncher:assembleRelease --no-daemon
+          cp app_pojavlauncher/build/outputs/apk/release/*.apk out/SmoothMine-Launcher-v1.0.0-release.apk
+          md5sum out/SmoothMine-Launcher-v1.0.0-release.apk > out/SmoothMine-Launcher-v1.0.0-release.md5
 
-      - name: Gen md5sums
+      - name: Build SmoothMine Debug APK
         run: |
-          md5sum out/app-release.apk > out/app-release.md5
+          gradle :app_pojavlauncher:assembleDebug --no-daemon
+          cp app_pojavlauncher/build/outputs/apk/debug/*.apk out/SmoothMine-Launcher-v1.0.0-debug.apk
+          md5sum out/SmoothMine-Launcher-v1.0.0-debug.apk > out/SmoothMine-Launcher-v1.0.0-debug.md5
 
-      - name: Build Debug .apk
-        run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleDebug
-          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug.apk
-
-      - name: Gen md5sums
-        run: |
-          md5sum out/app-debug.apk > out/app-debug.md5
-
-      - name: Upload debug APK
+      - name: Upload SmoothMine Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug (recommended)
-          path: out/app-debug.*
+          name: SmoothMine-Release-APK
+          path: out/SmoothMine-Launcher-v1.0.0-release.*
 
-      - name: Upload release APK
+      - name: Upload SmoothMine Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: out/app-release.*
+          name: SmoothMine-Debug-APK
+          path: out/SmoothMine-Launcher-v1.0.0-debug.*

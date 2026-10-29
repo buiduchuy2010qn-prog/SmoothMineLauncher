@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="smooth_engine_title">⚡ SMOOTHMINE BOOST ENGINE</string>
+    <string name="smooth_mode_ultra">🔥 Siêu Mượt</string>
+    <string name="smooth_mode_balanced">⚖️ Cân Bằng</string>
+    <string name="smooth_mode_quality">✨ Đồ Họa</string>
+
+    <string name="smooth_btn_install_fps_pack">🚀 Cài Gói Mod X3 FPS (Fabric + Sodium)</string>
+    <string name="smooth_btn_renderer_ram">🔄 Đổi Renderer / Dọn RAM</string>
+    <string name="smooth_play_button">▶ VÀO GAME MƯỢT</string>
+
+    <string name="smooth_toast_preset_applied">Đã bật chế độ %1$s • Cấp RAM: %2$d MB • Độ nét: %3$d%%</string>
+    <string name="smooth_toast_ram_cleaned">Đã dọn RAM &amp; tối ưu lại bộ nhớ! Trống: %1$d MB</string>
+    <string name="smooth_renderer_picker_title">Chọn Renderer Đồ Họa &amp; Dọn RAM</string>
+    <string name="smooth_sodium_auto_fixed">Phát hiện Sodium: Tự động bật MobileGlues GL 4.x để tăng FPS!</string>
+
+    <string name="smooth_fps_pack_dialog_title">🚀 Cài Đặt Gói Tăng X3 FPS (Tự Động)</string>
+    <string name="smooth_fps_pack_starting">Đang chuẩn bị gói SmoothBoost cho Minecraft %1$s…</string>
+    <string name="smooth_fps_pack_progress_fabric">Đang cài Fabric Loader cho %1$s…</string>
+    <string name="smooth_fps_pack_progress_mod">Đang tải %1$s…</string>
+    <string name="smooth_fps_pack_progress_finalize">Đang tinh chỉnh JVM Flags, MobileGlues &amp; Sodium…</string>
+    <string name="smooth_fps_pack_done_title">✅ Đã Cài Xong Gói Siêu Mượt!</string>
+    <string name="smooth_fps_pack_done_msg">Đã tạo và chọn sẵn profile \"%1$s\" với thư mục riêng chống xung đột.\n\nBộ mod đã cài:\n• %2$s\n\nĐã tự động bật MobileGlues + cấu hình Sodium tối ưu GPU. Bạn bấm \"VÀO GAME MƯỢT\" là chiến ngay!</string>
+</resources>

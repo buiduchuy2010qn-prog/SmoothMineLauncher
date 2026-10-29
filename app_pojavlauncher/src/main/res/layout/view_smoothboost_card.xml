@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/smooth_boost_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_smooth_card"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/smooth_title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/smooth_engine_title"
+            android:textColor="#34D399"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/smooth_tier_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_smooth_chip_idle"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:text="Đang quét..."
+            android:textColor="#E2E8F0"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- GPU & CPU Info -->
+    <TextView
+        android:id="@+id/smooth_gpu_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="GPU: Đang kiểm tra phần cứng..."
+        android:textColor="#F8FAFC"
+        android:textSize="12sp" />
+
+    <!-- Active Renderer & Scale -->
+    <TextView
+        android:id="@+id/smooth_renderer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Renderer: MobileGlues • Độ nét: 85%"
+        android:textColor="#38BDF8"
+        android:textSize="12sp" />
+
+    <!-- Live RAM Telemetry -->
+    <TextView
+        android:id="@+id/smooth_ram_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="RAM: -- / -- MB"
+        android:textColor="#94A3B8"
+        android:textSize="11sp" />
+
+    <ProgressBar
+        android:id="@+id/smooth_ram_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="4dp"
+        android:max="100"
+        android:progress="50"
+        android:progressDrawable="@drawable/bg_ram_progress" />
+
+    <!-- 3 Performance Mode Chips -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/btn_mode_ultra"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_smooth_chip_idle"
+            android:padding="2dp"
+            android:text="@string/smooth_mode_ultra"
+            android:textAllCaps="false"
+            android:textColor="#F8FAFC"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btn_mode_balanced"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginHorizontal="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_smooth_chip_active"
+            android:padding="2dp"
+            android:text="@string/smooth_mode_balanced"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_mode_quality"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_smooth_chip_idle"
+            android:padding="2dp"
+            android:text="@string/smooth_mode_quality"
+            android:textAllCaps="false"
+            android:textColor="#F8FAFC"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Primary 1-Click FPS Modpack Button -->
+    <Button
+        android:id="@+id/btn_install_fps_pack"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_smooth_action_btn"
+        android:paddingHorizontal="10dp"
+        android:text="@string/smooth_btn_install_fps_pack"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Secondary Renderer & RAM Cleaner Button -->
+    <Button
+        android:id="@+id/btn_switch_renderer_ram"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_smooth_secondary_btn"
+        android:paddingHorizontal="10dp"
+        android:text="@string/smooth_btn_renderer_ram"
+        android:textAllCaps="false"
+        android:textColor="#E0F2FE"
+        android:textSize="11sp" />
+
+</LinearLayout>

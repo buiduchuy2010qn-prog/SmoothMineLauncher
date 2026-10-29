@@ -3,13 +3,24 @@
     <color name="control_button_color">#4CC4C4C4</color>
     <color name="control_button_pressed_color">#4D000000</color>
 
-    <color name="minebutton_color">#9649b8</color>
-    <color name="background_app">#181818</color>
+    <color name="minebutton_color">#10B981</color>
+    <color name="background_app">#0B0F17</color>
     <color name="divider">@color/background_overlay</color>
-    <color name="background_overlay">#464646</color>
-    <color name="background_status_bar">#242424</color>
-    <color name="background_bottom_bar">#232323</color>
+    <color name="background_overlay">#1E293B</color>
+    <color name="background_status_bar">#080B11</color>
+    <color name="background_bottom_bar">#111827</color>
 
-    <color name="primary_text">#FFFFFF</color>
-    <color name="secondary_text">#B2B2B2</color>
+    <color name="primary_text">#F8FAFC</color>
+    <color name="secondary_text">#94A3B8</color>
+
+    <!-- SmoothMine Gaming Palette -->
+    <color name="smooth_card_bg">#131C2E</color>
+    <color name="smooth_card_stroke">#233854</color>
+    <color name="smooth_emerald">#10B981</color>
+    <color name="smooth_emerald_dark">#059669</color>
+    <color name="smooth_emerald_pressed">#047857</color>
+    <color name="smooth_emerald_glow">#34D399</color>
+    <color name="smooth_cyan">#06B6D4</color>
+    <color name="smooth_chip_idle">#1E293B</color>
+    <color name="smooth_chip_stroke">#334155</color>
 </resources>

@@ -79,8 +79,11 @@ public class NewJREUtil {
     /** @return true if everything is good, false otherwise.  */
     public static boolean installNewJreIfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
         //Now we have the reliable information to check if our runtime settings are good enough
-        if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy"))
-            return true;
+        if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy")) {
+            if (MultiRTUtils.getNearestJreName(8) != null) return true;
+            tryDownloadRuntime(activity, 8);
+            return MultiRTUtils.getNearestJreName(8) != null;
+        }
 
         int gameRequiredVersion = versionInfo.javaVersion.majorVersion;
 
