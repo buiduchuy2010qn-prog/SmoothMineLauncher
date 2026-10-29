@@ -1,5 +1,7 @@
 # ⚡ SmoothMine Launcher (Android)
 
+<img src="app_pojavlauncher/src/main/assets/smoothmine.png" align="left" width="128" height="128" alt="SmoothMine 3D Logo">
+
 [![SmoothMine Android Build](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml)
 [![Tải APK Mới Nhất](https://img.shields.io/github/v/release/buiduchuy2010qn-prog/SmoothMineLauncher?label=T%E1%BA%A3i%20APK&color=10B981)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/releases/latest)
 
