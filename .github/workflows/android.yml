@@ -1,14 +1,35 @@
-name: SmoothMine Android Build
+name: SmoothMine Android Build & Release
 
 on:
   push:
     branches:
-      - '*'
+      - 'v3_openjdk'
+      - 'main'
+    tags:
+      - 'v*'
+  pull_request:
+    types: [ opened, synchronize, reopened ]
   workflow_dispatch:
+    inputs:
+      publish_release:
+        description: 'Tự động tạo trang tải GitHub Release mới sau khi build xong?'
+        required: false
+        default: false
+        type: boolean
+      release_tag:
+        description: 'Mã phiên bản Release (ví dụ: v1.0.1 - chỉ dùng khi bật Publish Release)'
+        required: false
+        default: 'v1.0.1'
+        type: string
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout SmoothMine Source
         uses: actions/checkout@v4
@@ -61,26 +82,50 @@ jobs:
           ./scripts/languagelist_updater.sh
           mkdir -p out
 
+      - name: Determine Version Label
+        id: ver
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            VER="${GITHUB_REF#refs/tags/}"
+          elif [[ "${{ inputs.publish_release }}" == "true" && -n "${{ inputs.release_tag }}" ]]; then
+            VER="${{ inputs.release_tag }}"
+          else
+            VER="v1.0.0-${GITHUB_SHA::7}"
+          fi
+          echo "version=$VER" >> "$GITHUB_OUTPUT"
+
       - name: Build Signed SmoothMine Release APK
         run: |
           gradle :app_pojavlauncher:assembleRelease --no-daemon
-          cp app_pojavlauncher/build/outputs/apk/release/*.apk out/SmoothMine-Launcher-v1.0.0-release.apk
-          md5sum out/SmoothMine-Launcher-v1.0.0-release.apk > out/SmoothMine-Launcher-v1.0.0-release.md5
+          cp app_pojavlauncher/build/outputs/apk/release/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-release.apk"
+          md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-release.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-release.md5"
 
       - name: Build SmoothMine Debug APK
         run: |
           gradle :app_pojavlauncher:assembleDebug --no-daemon
-          cp app_pojavlauncher/build/outputs/apk/debug/*.apk out/SmoothMine-Launcher-v1.0.0-debug.apk
-          md5sum out/SmoothMine-Launcher-v1.0.0-debug.apk > out/SmoothMine-Launcher-v1.0.0-debug.md5
+          cp app_pojavlauncher/build/outputs/apk/debug/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-debug.apk"
+          md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-debug.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-debug.md5"
 
-      - name: Upload SmoothMine Release APK
+      - name: Upload SmoothMine Release APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SmoothMine-Release-APK
-          path: out/SmoothMine-Launcher-v1.0.0-release.*
+          path: out/*-release.*
 
-      - name: Upload SmoothMine Debug APK
+      - name: Upload SmoothMine Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SmoothMine-Debug-APK
-          path: out/SmoothMine-Launcher-v1.0.0-debug.*
+          path: out/*-debug.*
+
+      - name: Auto-Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.publish_release == true
+        run: |
+          TAG="${{ steps.ver.outputs.version }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" out/*.apk out/*.md5 --clobber
+          else
+            gh release create "$TAG" out/*.apk out/*.md5 \
+              --title "SmoothMine Launcher $TAG" \
+              --generate-notes
+          fi

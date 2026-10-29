@@ -1,28 +1,56 @@
 # ⚡ SmoothMine Launcher (Android)
 
-**SmoothMine Launcher** là trình khởi chạy **Minecraft: Java Edition** trên điện thoại Android được tùy biến chuyên sâu về **tối ưu FPS, quản lý RAM chống văng game và trải nghiệm 1-Chạm**, phát triển trên nền tảng lõi mã nguồn mở [Amethyst-Android](https://github.com/AngelAuraMC/Amethyst-Android) (LGPL-3.0).
+[![SmoothMine Android Build](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml)
+[![Tải APK Mới Nhất](https://img.shields.io/github/v/release/buiduchuy2010qn-prog/SmoothMineLauncher?label=T%E1%BA%A3i%20APK&color=10B981)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/releases/latest)
 
-## 🚀 Tính năng nổi bật của SmoothMine
+**SmoothMine Launcher** là trình khởi chạy **Minecraft: Java Edition** cho Android được thiết kế để **phát triển, tùy biến và tự động đóng gói APK 100% trên đám mây GitHub**, xây dựng trên lõi mã nguồn mở `Amethyst-Android` (LGPL-3.0).
 
-1. **SmoothBoost Hardware Engine (`SmoothHardwareProfiler`)**
-   - Tự động quét GPU (`Qualcomm Adreno`, `ARM Mali`, `Immortalis`, `Vulkan`) và số nhân CPU để chọn sẵn **Renderer mượt nhất** (`MobileGlues GL 4.x`, `Light-The-Way GLES 3`, `Vulkan Zink/Turnip` hoặc `NG-GL4ES`).
-   - Tự động tính toán mức cấp phát RAM thông minh theo tổng RAM & RAM trống thực tế, chừa khoảng thở cho driver đồ họa giúp **chống lỗi Android `lmkd` tự đóng game**.
-   - Bật sẵn **Big Core Affinity** (ưu tiên nhân hiệu năng cao của CPU), chế độ kết xuất trực tiếp **SurfaceView** giảm độ trễ cảm ứng, cùng bộ **JVM G1GC Low-Pause Flags**.
+👉 **[Tải ngay bản APK mới nhất tại mục Releases](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/releases/latest)**
 
-2. **3 Chế Độ Hiệu Năng Tức Thì ngay tại Màn Hình Chính**
-   - 🔥 **Siêu Mượt FPS**: Tối ưu tỷ lệ độ phân giải thông minh, tắt pipeline check thừa trong MobileGlues, đưa cấu hình `options.txt` về chuẩn PvP/FPS cao.
-   - ⚖️ **Cân Bằng**: Mượt 60–120 FPS với tầm nhìn và độ nét hài hòa.
-   - ✨ **Đồ Họa Đẹp**: Độ phân giải gốc 100%, bật Compute Shader & DSA cho Shader nhẹ.
+---
 
-3. **1-Chạm Cài Đặt Gói Mod X3 FPS (`FpsModpackInstaller`)**
-   - Kết nối trực tiếp **Fabric Meta API** & **Modrinth API v2** để tự động tải và tạo instance riêng biệt (`custom_instances/smoothboost_<version>`) chống xung đột mod giữa các phiên bản (`1.16.5` -> `1.21.4`):
-     - `Fabric API` + `Sodium` + `Lithium` + `FerriteCore` + `ImmediatelyFast` + `EntityCulling`
-   - Tự động tạo `sodium-options.json` & `sodium-mixins.properties` tối ưu riêng cho GPU di động.
+## 🚀 Tính năng tối ưu hiệu năng độc quyền
 
-## 📦 Build APK
+1. **SmoothBoost Hardware Engine (`SmoothHardwareProfiler.java`)**
+   - Tự quét GPU (`Qualcomm Adreno`, `ARM Mali`, `Immortalis`, `Vulkan`) & tổng/trống RAM thực tế.
+   - Tự động chọn Renderer tối ưu (`MobileGlues GL 4.x`, `Light-The-Way GLES 3`, `Vulkan Zink/Turnip`, `NG-GL4ES`).
+   - Tính ngưỡng RAM an toàn chống lỗi hệ thống Android `lmkd` tự tắt game + bật sẵn **Big Core Affinity**, **SurfaceView** trực tiếp và **JVM G1GC Low-Pause**.
+2. **3 Chế Độ Hiệu Năng Tức Thì trên Màn Hình Chính**
+   - 🔥 **Siêu Mượt FPS** • ⚖️ **Cân Bằng** • ✨ **Đồ Họa Đẹp**
+3. **1-Chạm Cài Đặt Gói Mod X3 FPS (`FpsModpackInstaller.java`)**
+   - Tự tải **Fabric Loader** + `Fabric API`, `Sodium`, `Lithium`, `FerriteCore`, `ImmediatelyFast`, `EntityCulling` từ Modrinth API v2 vào thư mục riêng `custom_instances/smoothboost_<version>` (`1.16.5` → `1.21.4`).
 
-Dự án tích hợp sẵn GitHub Actions tại `.github/workflows/android.yml` tự động đóng gói JRE và xuất cả hai bản `SmoothMine-Release-APK` và `SmoothMine-Debug-APK`.
+---
+
+## 🛠️ Hướng dẫn tự chỉnh sửa & Build APK 100% trên Web GitHub (Không cần PC mạnh)
+
+Bạn không cần cài Android Studio hay SDK nặng máy — mọi thao tác sửa giao diện, thêm tính năng và xuất file `.apk` đều làm trực tiếp trên GitHub:
+
+### Bước 1: Mở trình sửa code ngay trên trình duyệt
+- Truy cập repo **https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher** và nhấn phím **`.` (dấu chấm)** trên bàn phím (hoặc đổi `.com` thành **`.dev`**: `https://github.dev/buiduchuy2010qn-prog/SmoothMineLauncher`) để mở **VS Code Web** miễn phí.
+- Hoặc bấm nút xanh **`<> Code` → tab `Codespaces` → `Create codespace`** nếu muốn có cả máy ảo đám mây cài sẵn Java 21.
+
+### Bước 2: Các file quan trọng để bạn tùy biến thêm
+| Bạn muốn chỉnh gì? | Đường dẫn file trên GitHub |
+|---|---|
+| **Bảng màu giao diện & Nút bấm** | `app_pojavlauncher/src/main/res/values/colors.xml` & `res/drawable/bg_smooth_*.xml` |
+| **Chữ hiển thị Tiếng Việt** | `app_pojavlauncher/src/main/res/values/smooth_strings.xml` |
+| **Bố cục Bảng điều khiển SmoothBoost** | `app_pojavlauncher/src/main/res/layout/view_smoothboost_card.xml` |
+| **Logic màn hình chính** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/fragments/MainMenuFragment.java` |
+| **Thuật toán chia RAM, JVM Flags & GPU** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/smooth/SmoothHardwareProfiler.java` |
+| **Danh sách Mod tăng FPS tự động tải** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/smooth/FpsModpackInstaller.java` |
+| **Tên ứng dụng & Version** | `app_pojavlauncher/build.gradle` |
+
+### Bước 3: Xuất file APK & Tạo trang tải Release mới tự động
+- **Cách 1 (Tự động mỗi khi Commit):** Cứ bấm **Commit & Push** trên GitHub Web là tab **Actions** sẽ tự động chạy biên dịch C++/NDK và trả ra file `SmoothMine-Release-APK` sau ~4–5 phút.
+- **Cách 2 (Phát hành bản Release chính thức 1-Chạm):**
+  1. Vào tab **[Actions](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml)** trên GitHub.
+  2. Bấm nút **Run workflow**.
+  3. Tích vào ô **Tự động tạo trang tải GitHub Release mới**, nhập mã phiên bản (ví dụ `v1.0.1`), rồi bấm **Run workflow**.
+  4. Sau 5 phút, file `.apk` mới sẽ tự động xuất hiện công khai tại mục **[Releases](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/releases)**!
+
+---
 
 ## 📜 Giấy phép (License)
 
-Phát hành theo giấy phép **GNU LGPL-3.0**, kế thừa và tuân thủ bản quyền mã nguồn mở từ PojavLauncherTeam & AngelAuraMC/Amethyst-Android.
+Phát hành theo giấy phép **GNU LGPL-3.0**, kế thừa từ PojavLauncherTeam & AngelAuraMC/Amethyst-Android.

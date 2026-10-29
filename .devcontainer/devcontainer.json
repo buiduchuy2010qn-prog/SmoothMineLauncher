@@ -1,0 +1,14 @@
+{
+  "name": "SmoothMine Cloud Dev (JDK 21)",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "redhat.vscode-xml",
+        "vscjava.vscode-gradle"
+      ]
+    }
+  },
+  "postCreateCommand": "git submodule update --init --recursive"
+}
