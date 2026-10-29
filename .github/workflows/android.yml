@@ -94,29 +94,28 @@ jobs:
           fi
           echo "version=$VER" >> "$GITHUB_OUTPUT"
 
-      - name: Build Signed SmoothMine Release APK
+      - name: Build Signed SmoothMine Universal Release APK (32-bit + 64-bit)
         run: |
           gradle :app_pojavlauncher:assembleRelease --no-daemon
-          cp app_pojavlauncher/build/outputs/apk/release/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-release.apk"
-          md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-release.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-release.md5"
+          cp app_pojavlauncher/build/outputs/apk/release/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-universal.apk"
+          md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-universal.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-universal.md5"
 
-      - name: Build SmoothMine Debug APK
+      - name: Build Signed SmoothMine ARM64 Slim Release APK (Recommended 64-bit)
         run: |
-          gradle :app_pojavlauncher:assembleDebug --no-daemon
-          cp app_pojavlauncher/build/outputs/apk/debug/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-debug.apk"
-          md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-debug.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-debug.md5"
+          rm -rf app_pojavlauncher/build/outputs/apk/release
+          rm -f app_pojavlauncher/src/main/assets/components/jre/bin-arm.tar.xz
+          rm -f app_pojavlauncher/src/main/assets/components/jre/bin-x86.tar.xz
+          rm -f app_pojavlauncher/src/main/assets/components/jre/bin-x86_64.tar.xz
+          sed -i 's/APP_ABI := .*/APP_ABI := arm64-v8a/' app_pojavlauncher/src/main/jni/Application.mk
+          gradle :app_pojavlauncher:assembleRelease -PonlyArm64=true --no-daemon
+          cp app_pojavlauncher/build/outputs/apk/release/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-arm64.apk"
+          md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-arm64.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-arm64.md5"
 
-      - name: Upload SmoothMine Release APK Artifact
+      - name: Upload SmoothMine Release APK Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: SmoothMine-Release-APK
-          path: out/*-release.*
-
-      - name: Upload SmoothMine Debug APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SmoothMine-Debug-APK
-          path: out/*-debug.*
+          name: SmoothMine-Release-APKs
+          path: out/*.apk
 
       - name: Auto-Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v') || inputs.publish_release == true

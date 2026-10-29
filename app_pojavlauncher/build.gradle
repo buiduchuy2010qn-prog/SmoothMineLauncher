@@ -7,7 +7,7 @@ static def getDate() { return new Date().format('yyyyMMdd') }
 def getVersionName = {
     // Get the last version tag, as well as the short head of the last commit
     String TAG = ""
-    String semVer = "1.1.0"
+    String semVer = "1.1.1"
     // Used by the fallback for github actions
     String TAG_PART_COMMIT = ""
     String TAG_STRING
@@ -85,6 +85,12 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+        smoothmineRelease {
+            storeFile file("smoothmine_release.p12")
+            storePassword "smoothmine2026"
+            keyAlias "smoothmine"
+            keyPassword "smoothmine2026"
+        }
         customRelease {
             storeFile file("aamc_upload.jks")
             storePassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
@@ -103,9 +109,14 @@ android {
         applicationId "vn.smoothmine.launcher"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 10000100
+        versionCode 10000101
         versionName getVersionName()
         multiDexEnabled true //important
+        if (project.hasProperty("onlyArm64")) {
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+        }
         resValue 'string', 'curseforge_api_key', getCFApiKey()
         externalNativeBuild {
             ndkBuild {
@@ -142,7 +153,7 @@ android {
             // Don't set to true or java.awt will be a.a or something similar.
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig (file('aamc_upload.jks').exists() && System.getenv('GPLAY_KEYSTORE_PASSWORD') ? signingConfigs.customRelease : signingConfigs.customDebug)
+            signingConfig (file('aamc_upload.jks').exists() && System.getenv('GPLAY_KEYSTORE_PASSWORD') ? signingConfigs.customRelease : signingConfigs.smoothmineRelease)
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
@@ -181,6 +192,7 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = true
+            excludes += ['**/armeabi/**', '**/mips/**', '**/mips64/**']
             // If you're debugging mesa libs, put them here, android will strip them
             // and not properly link to source files, very smart android studio.
             keepDebugSymbols += ['**/libcutils.so']
