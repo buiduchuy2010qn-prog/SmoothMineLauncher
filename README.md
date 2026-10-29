@@ -21,6 +21,12 @@
    - 🔥 **Siêu Mượt FPS** • ⚖️ **Cân Bằng** • ✨ **Đồ Họa Đẹp**
 3. **1-Chạm Cài Đặt Gói Mod X3 FPS (`FpsModpackInstaller.java`)**
    - Tự tải **Fabric Loader** + `Fabric API`, `Sodium`, `Lithium`, `FerriteCore`, `ImmediatelyFast`, `EntityCulling` từ Modrinth API v2 vào thư mục riêng `custom_instances/smoothboost_<version>` (`1.16.5` → `1.21.4`).
+4. **Can Thiệp & Tối Ưu Sâu File Game (`GameFileOptimizer.java` — Mới ở `v1.1.0`)**
+   - **Can thiệp Engine & I/O (`options.txt` & `splash.properties`)**: Tự tắt `syncChunkWrites` chống khựng ổ nhớ flash khi đi xa, tắt HRTF `directionalAudio`, tắt `glDebugVerbosity` & màn hình nạp FBO của Forge.
+   - **Can thiệp sâu OptiFine & Hệ sinh thái Mod (`optionsof.txt` + `config/*`)**: Tự tắt `ofSmoothFps` (loại bỏ lệnh `glFinish()` gây tụt FPS trên GPU Adreno/Mali), bật `ofRenderRegions` + `ofSmartAnimations`, và tự cấu hình sâu cho `Sodium`/`Embeddium`, `Lithium`, `FerriteCore`, `ImmediatelyFast`, `EntityCulling`, `forge-client.toml`.
+   - **Tự đóng gói & bơm Resource Pack siêu nhẹ (`SmoothMine-FPS-Pack.zip`)**: Tự nhận diện `pack_format` theo phiên bản Minecraft, khử lớp phủ Overdraw toàn màn hình và triệt tiêu hạt khói/bào tử/sương mù ngốn GPU.
+   - **Log4j2 Async Buffer & Dọn rác Cache**: Chuyển `latest.log` sang ghi đệm bất đồng bộ (`immediateFlush="false"`, vẫn giữ nguyên bản vá RCE Log4Shell) + dọn sạch `.log.gz`, `.mixin.out`, `telemetry`, `crash-reports` tồn đọng.
+   - **Sao lưu & Khôi phục 1-Chạm**: Tự lưu bản gốc tại `smoothmine_backup/` trước khi can thiệp, hỗ trợ nút **↩️ Khôi Phục Gốc** bất cứ lúc nào.
 
 ---
 
@@ -41,6 +47,7 @@ Bạn không cần cài Android Studio hay SDK nặng máy — mọi thao tác s
 | **Logic màn hình chính** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/fragments/MainMenuFragment.java` |
 | **Thuật toán chia RAM, JVM Flags & GPU** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/smooth/SmoothHardwareProfiler.java` |
 | **Danh sách Mod tăng FPS tự động tải** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/smooth/FpsModpackInstaller.java` |
+| **Can thiệp sâu File Game, OptiFine & FPS Pack** | `app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/smooth/GameFileOptimizer.java` |
 | **Tên ứng dụng & Version** | `app_pojavlauncher/build.gradle` |
 
 ### Bước 3: Xuất file APK & Tạo trang tải Release mới tự động

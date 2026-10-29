@@ -189,9 +189,10 @@ public final class FpsModpackInstaller {
                         .putString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, profileKey)
                         .apply();
 
-                // 5. Áp dụng trọn bộ tối ưu phần cứng, MobileGlues, JVM Flags, options.txt & sodium-options.json
+                // 5. Áp dụng trọn bộ tối ưu phần cứng, MobileGlues, JVM Flags, options.txt & can thiệp sâu File Game
                 SmoothHardwareProfiler.SmoothMode targetMode = SmoothHardwareProfiler.getSavedMode();
                 SmoothHardwareProfiler.applyPresetForProfile(activity, targetMode, boostProfile, mcVersion, true);
+                GameFileOptimizer.optimizeAllForDirectory(activity, instanceDir, mcVersion, targetMode);
 
                 ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
 

@@ -6,6 +6,8 @@
     <string name="smooth_mode_quality">✨ Đồ Họa</string>
 
     <string name="smooth_btn_install_fps_pack">🚀 Cài Gói Mod X3 FPS (Fabric + Sodium)</string>
+    <string name="smooth_btn_file_opt_idle">🛠️ Can Thiệp &amp; Tối Ưu Sâu File Game</string>
+    <string name="smooth_btn_file_opt_active">🛠️ Can Thiệp File Game: ĐANG BẬT ✓</string>
     <string name="smooth_btn_renderer_ram">🔄 Đổi Renderer / Dọn RAM</string>
     <string name="smooth_play_button">▶ VÀO GAME MƯỢT</string>
 
@@ -18,7 +20,20 @@
     <string name="smooth_fps_pack_starting">Đang chuẩn bị gói SmoothBoost cho Minecraft %1$s…</string>
     <string name="smooth_fps_pack_progress_fabric">Đang cài Fabric Loader cho %1$s…</string>
     <string name="smooth_fps_pack_progress_mod">Đang tải %1$s…</string>
-    <string name="smooth_fps_pack_progress_finalize">Đang tinh chỉnh JVM Flags, MobileGlues &amp; Sodium…</string>
+    <string name="smooth_fps_pack_progress_finalize">Đang tinh chỉnh JVM Flags, MobileGlues &amp; File Game…</string>
     <string name="smooth_fps_pack_done_title">✅ Đã Cài Xong Gói Siêu Mượt!</string>
-    <string name="smooth_fps_pack_done_msg">Đã tạo và chọn sẵn profile \"%1$s\" với thư mục riêng chống xung đột.\n\nBộ mod đã cài:\n• %2$s\n\nĐã tự động bật MobileGlues + cấu hình Sodium tối ưu GPU. Bạn bấm \"VÀO GAME MƯỢT\" là chiến ngay!</string>
+    <string name="smooth_fps_pack_done_msg">Đã tạo và chọn sẵn profile \"%1$s\" với thư mục riêng chống xung đột.\n\nBộ mod đã cài:\n• %2$s\n\nĐã tự động bật MobileGlues + can thiệp sâu config Sodium/Lithium/FerriteCore + bơm SmoothMine-FPS-Pack.zip. Bấm \"VÀO GAME MƯỢT\" là chiến ngay!</string>
+
+    <string name="smooth_file_opt_dialog_title">🛠️ Can Thiệp &amp; Tối Ưu Sâu File Game</string>
+    <string name="smooth_opt_item_engine">⚡ Engine &amp; I/O (options.txt, tắt SyncChunkWrites chống khựng)</string>
+    <string name="smooth_opt_item_mods">🧩 Config Mod &amp; OptiFine (optionsof.txt, Sodium, Lithium, FerriteCore…)</string>
+    <string name="smooth_opt_item_pack">📦 Bơm Gói Tài Nguyên Nhẹ (SmoothMine-FPS-Pack.zip giảm hạt &amp; mù)</string>
+    <string name="smooth_opt_item_logs">🔇 Chặn Spam Log Đĩa (Log4j2 Async) &amp; Dọn Rác Cache/Crash</string>
+    <string name="smooth_opt_item_auto">🔄 Tự động can thiệp file trước mỗi lần bấm Vào Game</string>
+    <string name="smooth_file_opt_apply_btn">🚀 Áp Dụng Ngay</string>
+    <string name="smooth_file_opt_restore_btn">↩️ Khôi Phục Gốc</string>
+    <string name="smooth_file_opt_running">Đang can thiệp sâu &amp; tối ưu các file trong thư mục game…</string>
+    <string name="smooth_file_opt_result_title">✅ Đã Tối Ưu Sâu File Game!</string>
+    <string name="smooth_file_opt_result_msg">Thư mục đã can thiệp: %1$s\nChế độ đồng bộ: %2$s\n\nCác hạng mục đã xử lý:\n%3$s\n\n🧹 Đã dọn rác bộ nhớ: %4$d file (%5$s)\n🛡️ Đã lưu bản gốc an toàn tại smoothmine_backup/ (có thể khôi phục bất kỳ lúc nào).</string>
+    <string name="smooth_file_opt_restored_toast">↩️ Đã khôi phục nguyên trạng %1$d file gốc &amp; gỡ gói tài nguyên FPS!</string>
 </resources>

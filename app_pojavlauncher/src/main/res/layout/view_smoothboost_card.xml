@@ -140,6 +140,20 @@
         android:textSize="12sp"
         android:textStyle="bold" />
 
+    <!-- Deep Game File Intervention & Optimizer Button -->
+    <Button
+        android:id="@+id/btn_deep_file_optimize"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/bg_smooth_file_opt_btn"
+        android:paddingHorizontal="10dp"
+        android:text="@string/smooth_btn_file_opt_idle"
+        android:textAllCaps="false"
+        android:textColor="#6EE7B7"
+        android:textSize="11.5sp"
+        android:textStyle="bold" />
+
     <!-- Secondary Renderer & RAM Cleaner Button -->
     <Button
         android:id="@+id/btn_switch_renderer_ram"

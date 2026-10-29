@@ -33,6 +33,7 @@ import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.smooth.FpsModpackInstaller;
+import net.kdt.pojavlaunch.smooth.GameFileOptimizer;
 import net.kdt.pojavlaunch.smooth.SmoothHardwareProfiler;
 import net.kdt.pojavlaunch.smooth.SmoothHardwareProfiler.HardwareReport;
 import net.kdt.pojavlaunch.smooth.SmoothHardwareProfiler.SmoothMode;
@@ -56,6 +57,7 @@ public class MainMenuFragment extends Fragment {
     private Button mBtnModeUltra;
     private Button mBtnModeBalanced;
     private Button mBtnModeQuality;
+    private Button mBtnDeepFileOpt;
 
     private final Handler mTelemetryHandler = new Handler(Looper.getMainLooper());
     private final Runnable mTelemetryRunnable = new Runnable() {
@@ -97,6 +99,7 @@ public class MainMenuFragment extends Fragment {
         mBtnModeBalanced = view.findViewById(R.id.btn_mode_balanced);
         mBtnModeQuality = view.findViewById(R.id.btn_mode_quality);
         Button btnInstallFpsPack = view.findViewById(R.id.btn_install_fps_pack);
+        mBtnDeepFileOpt = view.findViewById(R.id.btn_deep_file_optimize);
         Button btnSwitchRendererRam = view.findViewById(R.id.btn_switch_renderer_ram);
 
         if (mBtnModeUltra != null) {
@@ -112,6 +115,13 @@ public class MainMenuFragment extends Fragment {
             btnInstallFpsPack.setOnClickListener(v -> FpsModpackInstaller.showInstallDialog(requireActivity(), profileName -> {
                 if (isAdded()) {
                     mVersionSpinner.reloadProfiles();
+                    refreshSmoothDashboard();
+                }
+            }));
+        }
+        if (mBtnDeepFileOpt != null) {
+            mBtnDeepFileOpt.setOnClickListener(v -> GameFileOptimizer.showOptimizerDialog(requireActivity(), () -> {
+                if (isAdded()) {
                     refreshSmoothDashboard();
                 }
             }));
@@ -276,6 +286,10 @@ public class MainMenuFragment extends Fragment {
         updateModeChipStyle(mBtnModeUltra, report.currentMode == SmoothMode.ULTRA_FPS);
         updateModeChipStyle(mBtnModeBalanced, report.currentMode == SmoothMode.BALANCED);
         updateModeChipStyle(mBtnModeQuality, report.currentMode == SmoothMode.QUALITY);
+        if (mBtnDeepFileOpt != null) {
+            boolean deepActive = GameFileOptimizer.isDeepOptimizationActive();
+            mBtnDeepFileOpt.setText(deepActive ? R.string.smooth_btn_file_opt_active : R.string.smooth_btn_file_opt_idle);
+        }
     }
 
     private void updateModeChipStyle(Button btn, boolean active) {

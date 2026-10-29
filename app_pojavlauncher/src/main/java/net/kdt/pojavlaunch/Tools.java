@@ -58,6 +58,7 @@ import com.google.gson.GsonBuilder;
 
 import net.kdt.pojavlaunch.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutorTask;
+import net.kdt.pojavlaunch.smooth.GameFileOptimizer;
 import net.kdt.pojavlaunch.lifecycle.LifecycleAwareAlertDialog;
 import net.kdt.pojavlaunch.memory.MemoryHoleFinder;
 import net.kdt.pojavlaunch.memory.SelfMapsParser;
@@ -455,6 +456,7 @@ public final class Tools {
 
         // Pre-process specific files
         disableSplash(gamedir);
+        GameFileOptimizer.onPreLaunch(activity, minecraftProfile, gamedir, versionId);
         String[] launchArgs = getMinecraftClientArgs(minecraftAccount, versionInfo, gamedir);
 
         // Select the appropriate openGL version
@@ -472,6 +474,7 @@ public final class Tools {
             if (!new File(configFile).exists()) {
                 configFile = Tools.DIR_GAME_NEW + "/" + versionInfo.logging.client.file.id;
             }
+            configFile = GameFileOptimizer.resolveOptimalLog4jConfig(gamedir, configFile);
             javaArgList.add("-Dlog4j.configurationFile=" + configFile);
         }
 

@@ -413,8 +413,27 @@ public final class SmoothHardwareProfiler {
             File gameDir = Tools.getGameDirPath(profile);
             optimizeMinecraftOptions(ctx, gameDir, mode);
             writeOptimizedSodiumConfigs(gameDir, mode);
+            if (GameFileOptimizer.isDeepOptimizationActive()) {
+                GameFileOptimizer.executeInterventions(
+                        ctx,
+                        gameDir,
+                        versionId,
+                        mode,
+                        GameFileOptimizer.OptimizationOptions.loadFromPrefs()
+                );
+            }
         } else {
-            optimizeMinecraftOptions(ctx, new File(Tools.DIR_GAME_NEW), mode);
+            File defaultDir = new File(Tools.DIR_GAME_NEW);
+            optimizeMinecraftOptions(ctx, defaultDir, mode);
+            if (GameFileOptimizer.isDeepOptimizationActive()) {
+                GameFileOptimizer.executeInterventions(
+                        ctx,
+                        defaultDir,
+                        versionId,
+                        mode,
+                        GameFileOptimizer.OptimizationOptions.loadFromPrefs()
+                );
+            }
         }
 
         // Thu gom rác bộ nhớ của Launcher trước khi vào game
@@ -429,6 +448,7 @@ public final class SmoothHardwareProfiler {
         if (LauncherPreferences.DEFAULT_PREF == null) return;
         if (!LauncherPreferences.DEFAULT_PREF.getBoolean(PREF_FIRST_AUTO_TUNED, false)) {
             try {
+                GameFileOptimizer.OptimizationOptions.loadFromPrefs().saveToPrefs(true);
                 applyPreset(ctx, SmoothMode.BALANCED);
             } catch (Throwable t) {
                 Log.w(TAG, "First launch auto-tune skipped", t);
