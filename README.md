@@ -63,3 +63,12 @@ Bạn không cần cài Android Studio hay SDK nặng máy — mọi thao tác s
 ## 📜 Giấy phép (License)
 
 Phát hành theo giấy phép **GNU LGPL-3.0**, kế thừa từ PojavLauncherTeam & AngelAuraMC/Amethyst-Android.
+
+---
+
+## ⚖️ Tuyên bố Pháp lý & Bản quyền (Legal & Trademark Disclaimer)
+
+> **NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.**
+>
+> - **Minecraft** là nhãn hiệu đã đăng ký của **Mojang Synergies AB** và **Microsoft Corporation**. Dự án này là công cụ độc lập của cộng đồng, không liên kết, không được tài trợ hay phê duyệt bởi Mojang hoặc Microsoft.
+> - Trình khởi chạy không phân phối lại các tệp trò chơi có bản quyền của Mojang. Người dùng cần sở hữu tài khoản **Minecraft: Java Edition** hợp lệ theo [Minecraft EULA](https://www.minecraft.net/en-us/eula) (chế độ Local/Offline chỉ phục vụ kiểm thử phát triển cục bộ hoặc sử dụng ngoại tuyến cho người dùng đã sở hữu bản quyền).
