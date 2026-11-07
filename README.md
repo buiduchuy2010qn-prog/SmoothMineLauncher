@@ -3,7 +3,7 @@
 <img src="app_pojavlauncher/src/main/assets/smoothmine.png" align="left" width="128" height="128" alt="SmoothMine 3D Logo">
 
 [![SmoothMine Android Build](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml/badge.svg)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/actions/workflows/android.yml)
-[![Tải APK Mới Nhất](https://img.shields.io/github/v/release/buiduchuy2010qn-prog/SmoothMineLauncher?label=T%E1%BA%A3i%20APK&color=10B981)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/releases/latest)
+[![Tải APK Mới Nhất](https://img.shields.io/github/v/release/buiduchuy2010qn-prog/SmoothMineLauncher?label=T%E1%BA%A3i%20APK&color=10B981)](https://github.com/buiduchuy2010qn-prog/SmoothMineLauncher/releases/latest) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-3B82F6.svg)](./LICENSE)
 
 **SmoothMine Launcher** là trình khởi chạy **Minecraft: Java Edition** cho Android được thiết kế để **phát triển, tùy biến và tự động đóng gói APK 100% trên đám mây GitHub**, xây dựng trên lõi mã nguồn mở `Amethyst-Android` (LGPL-3.0).
 
@@ -62,7 +62,7 @@ Bạn không cần cài Android Studio hay SDK nặng máy — mọi thao tác s
 
 ## 📜 Giấy phép (License)
 
-Phát hành theo giấy phép **GNU LGPL-3.0**, kế thừa từ PojavLauncherTeam & AngelAuraMC/Amethyst-Android.
+Phát hành theo giấy phép **[GNU Lesser General Public License v3.0 (LGPL-3.0)](./LICENSE)**, kế thừa và phát triển từ mã nguồn mở của **PojavLauncherTeam** & **[AngelAuraMC/Amethyst-Android](https://github.com/AngelAuraMC/Amethyst-Android)**.
 
 ---
 
