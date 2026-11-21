@@ -86,10 +86,11 @@ android {
             keyPassword "android"
         }
         smoothmineRelease {
-            storeFile file("smoothmine_release.p12")
-            storePassword "smoothmine2026"
-            keyAlias "smoothmine"
-            keyPassword "smoothmine2026"
+            def ksPath = System.getenv("SMOOTHMINE_KEYSTORE_PATH") ?: "smoothmine_release.p12"
+            storeFile file(ksPath)
+            storePassword System.getenv("SMOOTHMINE_STORE_PASSWORD") ?: ""
+            keyAlias System.getenv("SMOOTHMINE_KEY_ALIAS") ?: "smoothmine"
+            keyPassword System.getenv("SMOOTHMINE_KEY_PASSWORD") ?: ""
         }
         customRelease {
             storeFile file("aamc_upload.jks")
@@ -153,7 +154,11 @@ android {
             // Don't set to true or java.awt will be a.a or something similar.
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig (file('aamc_upload.jks').exists() && System.getenv('GPLAY_KEYSTORE_PASSWORD') ? signingConfigs.customRelease : signingConfigs.smoothmineRelease)
+            def smoothmineKeystore = file(System.getenv("SMOOTHMINE_KEYSTORE_PATH") ?: "smoothmine_release.p12")
+            def hasSmoothmineSigning = smoothmineKeystore.exists() && System.getenv("SMOOTHMINE_STORE_PASSWORD")
+            signingConfig (file('aamc_upload.jks').exists() && System.getenv('GPLAY_KEYSTORE_PASSWORD')
+                ? signingConfigs.customRelease
+                : (hasSmoothmineSigning ? signingConfigs.smoothmineRelease : signingConfigs.customDebug))
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
