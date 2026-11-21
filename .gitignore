@@ -17,3 +17,9 @@ app_pojavlauncher/.cxx/
 
 /dist/
 /out/
+# Never commit private release signing keystores
+*.p12
+*.jks
+*.keystore
+!app_pojavlauncher/debug.keystore
+!app_pojavlauncher/aamc_upload.jks
