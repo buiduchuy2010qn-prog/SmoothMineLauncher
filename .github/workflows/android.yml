@@ -94,13 +94,34 @@ jobs:
           fi
           echo "version=$VER" >> "$GITHUB_OUTPUT"
 
+      - name: Decode Release Keystore (from GitHub Secrets)
+        env:
+          SMOOTHMINE_KEYSTORE_BASE64: ${{ secrets.SMOOTHMINE_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$SMOOTHMINE_KEYSTORE_BASE64" ]; then
+            echo "$SMOOTHMINE_KEYSTORE_BASE64" | base64 --decode > app_pojavlauncher/smoothmine_release.p12
+            echo "Decoded release keystore from GitHub Secrets."
+          else
+            echo "::warning::SMOOTHMINE_KEYSTORE_BASE64 secret is not configured; falling back to debug signing."
+          fi
+
       - name: Build Signed SmoothMine Universal Release APK (32-bit + 64-bit)
+        env:
+          SMOOTHMINE_KEYSTORE_PATH: smoothmine_release.p12
+          SMOOTHMINE_STORE_PASSWORD: ${{ secrets.SMOOTHMINE_STORE_PASSWORD }}
+          SMOOTHMINE_KEY_ALIAS: ${{ secrets.SMOOTHMINE_KEY_ALIAS }}
+          SMOOTHMINE_KEY_PASSWORD: ${{ secrets.SMOOTHMINE_KEY_PASSWORD }}
         run: |
           gradle :app_pojavlauncher:assembleRelease --no-daemon
           cp app_pojavlauncher/build/outputs/apk/release/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-universal.apk"
           md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-universal.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-universal.md5"
 
       - name: Build Signed SmoothMine ARM64 Slim Release APK (Recommended 64-bit)
+        env:
+          SMOOTHMINE_KEYSTORE_PATH: smoothmine_release.p12
+          SMOOTHMINE_STORE_PASSWORD: ${{ secrets.SMOOTHMINE_STORE_PASSWORD }}
+          SMOOTHMINE_KEY_ALIAS: ${{ secrets.SMOOTHMINE_KEY_ALIAS }}
+          SMOOTHMINE_KEY_PASSWORD: ${{ secrets.SMOOTHMINE_KEY_PASSWORD }}
         run: |
           rm -rf app_pojavlauncher/build/outputs/apk/release
           rm -f app_pojavlauncher/src/main/assets/components/jre/bin-arm.tar.xz
@@ -110,6 +131,10 @@ jobs:
           gradle :app_pojavlauncher:assembleRelease -PonlyArm64=true --no-daemon
           cp app_pojavlauncher/build/outputs/apk/release/*.apk "out/SmoothMine-${{ steps.ver.outputs.version }}-arm64.apk"
           md5sum "out/SmoothMine-${{ steps.ver.outputs.version }}-arm64.apk" > "out/SmoothMine-${{ steps.ver.outputs.version }}-arm64.md5"
+
+      - name: Clean Up Decoded Keystore
+        if: always()
+        run: rm -f app_pojavlauncher/smoothmine_release.p12
 
       - name: Upload SmoothMine Release APK Artifacts
         uses: actions/upload-artifact@v4
